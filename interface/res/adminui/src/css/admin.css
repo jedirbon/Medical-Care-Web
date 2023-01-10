@@ -171,7 +171,7 @@ html{background-color: #f2f2f2; color: #5F5F5F;}
 .layadmin-side-shrink .layui-side-menu .layui-nav-item cite,
 .layadmin-side-shrink .layui-side-menu .layui-nav > .layui-nav-item > a .layui-nav-more,
 .layadmin-side-shrink .layui-side-menu .layui-nav > .layui-nav-item > .layui-nav-child{display: none; padding: 8px 0; width: 200px;}
-.layadmin-side-shrink .layui-side-menu .layui-nav > .layui-nav-itemed>a{background: rgba(0,0,0,.3);}
+.layadmin-side-shrink .layui-side-menu .layui-nav > .layui-nav-itemed>a{background: rgba(0,0,0, 0.3);}
 
 /* 移动端展开模式 */
 .layadmin-side-spread-sm .layui-layout-admin .layui-layout-left,

@@ -21,7 +21,7 @@ layui.define(['all'], function(exports){
     engine: '.html', // 视图文件后缀名
     pageTabs: false, // 是否开启页面选项卡功能。单页版不推荐开启
     
-    name: 'layuiAdmin',
+    name: '医工医疗设备管理系统',
     tableName: 'layuiAdmin', // 本地存储表名
     MOD_NAME: 'admin', // 模块事件名
     

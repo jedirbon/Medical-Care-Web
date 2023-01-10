@@ -1,0 +1,148 @@
+<div class="content">
+    <div class="search">
+        <div class="search-head">
+            <i class="layui-icon layui-icon-search" style="font-size: 20px"></i>&nbsp;查询
+        </div>
+        <form class="layui-form search-body" action="">
+            <div class="">
+                <label class="layui-form-label">用户名称：</label>
+                <div class="layui-input-block">
+                    <input type="text" name="title" required lay-verify="required" placeholder="请输入标题"
+                           autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="">
+                <label class="layui-form-label">管理科室：</label>
+                <div class="layui-input-block">
+                    <select name="city">
+                        <option value="">请选择所属科室</option>
+                        <option value="0">北京</option>
+                        <option value="1">上海</option>
+                        <option value="2">广州</option>
+                        <option value="3">深圳</option>
+                        <option value="4">杭州</option>
+                    </select>
+                </div>
+            </div>
+            <div class="">
+                <label class="layui-form-label">所属角色：</label>
+                <div class="layui-input-block">
+                    <select name="city">
+                        <option value="">请选择所属角色</option>
+                        <option value="0">北京</option>
+                        <option value="1">上海</option>
+                        <option value="2">广州</option>
+                        <option value="3">深圳</option>
+                        <option value="4">杭州</option>
+                    </select>
+                </div>
+            </div>
+            <div class="flex ml-40">
+                <button type="button" class="layui-btn"><i class="layui-icon layui-icon-search"></i>搜索</button>
+                <button type="button" class="layui-btn layui-btn-primary">重置</button>
+            </div>
+        </form>
+    </div>
+    <div class="table">
+        <div class="layui-fluid">
+            <div class="layui-row layui-col-space15">
+                <div class="layui-col-md12">
+                    <div class="layui-card">
+                        <div class="layui-card-header">数据操作</div>
+                        <div class="layui-card-body">
+                            <div class="layui-btn-group test-table-operate-btn" style="margin-bottom: 10px;">
+                                <button class="layui-btn" data-type="getCheckData">获取选中行数据</button>
+                                <button class="layui-btn" data-type="getCheckLength">获取选中数目</button>
+                                <button class="layui-btn" data-type="isAll">验证是否全选</button>
+                            </div>
+
+                            <table class="layui-hide" id="test-table-operate" lay-filter="test-table-operate"></table>
+
+                            <script type="text/html" id="test-table-operate-barDemo">
+                                <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>
+                                <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+                                <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+                            </script>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+    .table{
+
+    }
+    .flex {
+        display: flex;
+    }
+    .ml-40{
+        margin-left: 40px;
+    }
+    .content {
+        margin: 14px;
+        height: 100%;
+        overflow-y: auto;
+    }
+
+    .search {
+        display: flex;
+        flex-direction: column;
+        background: white;
+        padding: 10px;
+    }
+
+    .search-head {
+        display: flex;
+        justify-content: start;
+        font-size: 16px;
+        line-height: 42px;
+        border-bottom: 1px solid rgba(100, 100, 100, 0.1);
+    }
+
+    .search-body {
+        margin: 20px 0px 10px 10px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: start;
+        align-items: center;
+    }
+</style>
+<script>
+    layui.use(['admin', 'form','table'], function () {
+        var $ = layui.$
+            , admin = layui.admin
+            , table = layui.table
+            , element = layui.element
+            , form = layui.form;
+
+        form.render();
+        table.render({
+            elem: '#test-table-operate'
+            ,url: './json/table/user.js'
+            ,width: admin.screen() > 1 ? '100%' : ''
+            ,height: 332
+            ,cols: [[
+                {type:'checkbox', fixed: 'left'}
+                ,{field:'id', width:80, title: 'ID', sort: true, fixed: 'left'}
+                ,{field:'username', width:80, title: '用户名'}
+                ,{field:'sex', width:80, title: '性别', sort: true}
+                ,{field:'city', width:80, title: '城市'}
+                ,{field:'sign', width: 160, title: '签名'}
+                ,{field:'experience', width:80, title: '积分', sort: true}
+                ,{field:'wealth', width:135, title: '财富', sort: true}
+                ,{field:'classify', width:80, title: '职业'}
+                ,{field:'score', width:80, title: '评分', sort: true, fixed: 'right'}
+                ,{width:178, align:'center', fixed: 'right', toolbar: '#test-table-operate-barDemo'}
+            ]]
+            ,page: true
+        });
+        element.render('breadcrumb', 'breadcrumb');
+
+        form.on('submit(component-form-element)', function (data) {
+            layer.msg(JSON.stringify(data.field));
+            return false;
+        });
+    });
+</script>
