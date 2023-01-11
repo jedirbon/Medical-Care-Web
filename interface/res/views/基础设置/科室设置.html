@@ -1,0 +1,124 @@
+<div class="content">
+    <div class="search">
+        <div class="search-head">
+            <i class="layui-icon layui-icon-search" style="font-size: 20px"></i>&nbsp;查询
+        </div>
+        <form class="layui-form search-body" action="">
+            <div class="">
+                <label class="layui-form-label">科室名称：</label>
+                <div class="layui-input-block">
+                    <select name="city" lay-filter="test">
+                        <option value="">点击选择科室名称搜索</option>
+                        <option value="0">北京</option>
+                        <option value="1">上海</option>
+                        <option value="2">广州</option>
+                        <option value="3">深圳</option>
+                        <option value="4">杭州</option>
+                    </select>
+                </div>
+            </div>
+            <div class="ml-40">
+                <button type="button" class="layui-btn"><i class="layui-icon layui-icon-search"></i>搜索</button>
+                <button type="button" class="layui-btn layui-btn-primary">重置</button>
+            </div>
+        </form>
+    </div>
+    <div class="table">
+        <div class="layui-row layui-col-space15">
+            <div class="layui-col-md12">
+                <div class="layui-card">
+                    <div class="flex bt-1 pd-10 flex-start">
+                        <i class="layui-icon layui-icon-table">列表</i>
+                        <div class="ml-20">
+                            <button class="layui-btn layui-btn-sm">添加主科室</button>
+                            <button class="layui-btn layui-btn-normal layui-btn-sm">批量添加主科室</button>
+                        </div>
+                    </div>
+                    <div class="layui-card-body">
+                        <blockquote class="layui-elem-quote layui-text layui-font-red">
+                            注：如有科室已经存在，则不允许对科室进行删除操作！
+                        </blockquote>
+                        <table class="layui-hide" id="test-table-toolbar" lay-filter="test-table-toolbar"></table>
+                        <script type="text/html" id="test-table-toolbar-barDemo">
+                            <button class="layui-btn layui-btn-warm layui-btn-xs" lay-event="read">修改</button>
+                            <button class="layui-btn layui-btn-normal layui-btn-xs" lay-event="edit">审批人</button>
+                            <button class="layui-btn layui-btn-xs" lay-event="del">子科室</button>
+                            <button class="layui-btn layui-btn-primary layui-btn-xs" lay-event="del">删除</button>
+                        </script>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<style scoped>
+    .layui-btn+.layui-btn{
+        margin-left: 0;
+    }
+    .layui-elem-quote {
+        border-left: 5px solid red;
+        padding:8px;
+    }
+    .table {
+        width: 100%;
+        margin-top: 20px;
+    }
+    .content {
+        margin: 14px;
+        height: 100%;
+        overflow-y: auto;
+    }
+    .search {
+        display: flex;
+        flex-direction: column;
+        background: white;
+        padding: 10px;
+    }
+
+    .search-head {
+        display: flex;
+        justify-content: start;
+        font-size: 16px;
+        line-height: 42px;
+        border-bottom: 1px solid rgba(100, 100, 100, 0.1);
+    }
+    .search-body {
+        margin: 20px 0px 10px 10px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: start;
+        align-items: center;
+    }
+</style>
+<script>
+    layui.use(['admin', 'form','table'], function () {
+        var $ = layui.$
+            , table = layui.table
+            , form = layui.form;
+
+        form.render();
+        table.render({
+            elem: '#test-table-toolbar',
+            url:'./res/json/table/demo.json',
+            height:407,
+            title: '用户数据表',
+            cols: [[
+                {field:'id', title:'科室名称'}
+                ,{field:'username', title:'科室编码', width:120, edit: 'text'}
+                ,{field:'sex', title:'审批负责人', width:150, edit: 'text'}
+                ,{field:'tel', title:'科室负责人', width:150, edit: 'text'}
+                ,{field:'city', title:'设备数量', width:100}
+                ,{field:'sign', title:'设备总金额',width: 100}
+                ,{field:'experience', title:'设备负责人', width:80, sort: true}
+                ,{field:'ip', title:'所在位置', width:120}
+                ,{field:'logins', title:'科室电话', width:100, sort: true}
+                ,{title:'操作', toolbar: '#test-table-toolbar-barDemo',width:240,fixed:'right'}
+            ]]
+            ,page: true
+        });
+        form.on('submit(component-form-element)', function (data) {
+            layer.msg(JSON.stringify(data.field));
+            return false;
+        });
+    });
+</script>

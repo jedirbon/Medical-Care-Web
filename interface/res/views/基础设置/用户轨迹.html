@@ -1,0 +1,101 @@
+<div class="content">
+    <div class="search">
+        <div class="search-head">
+            <i class="layui-icon layui-icon-search" style="font-size: 20px"></i>&nbsp;查询
+        </div>
+        <form class="layui-form search-body" action="">
+            <div class="">
+                <label class="layui-form-label">用户名称：</label>
+                <div class="layui-input-block">
+                    <input type="text" name="title" required lay-verify="required" placeholder="请输入标题"
+                           autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="">
+                <label class="layui-form-label">回退状态：</label>
+                <div class="layui-input-block">
+                    <input type="text" class="layui-input" id="backState" placeholder="yyyy-MM">
+                </div>
+            </div>
+            <div class="ml-40">
+                <button type="button" class="layui-btn"><i class="layui-icon layui-icon-search"></i>搜索</button>
+                <button type="button" class="layui-btn layui-btn-primary">重置</button>
+            </div>
+        </form>
+    </div>
+    <div class="table">
+        <div class="layui-row layui-col-space15">
+            <div class="layui-col-md12">
+                <div class="layui-card">
+                    <div class="flex bt-1 pd-10"><i class="layui-icon layui-icon-table">列表</i></div>
+                    <div class="layui-card-body">
+                        <table class="layui-hide" id="test-table-toolbar" lay-filter="test-table-toolbar"></table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+    .layui-table-cell{
+        height: 80px;
+        line-height: 80px;
+    }
+    .table {
+        width: 100%;
+        margin-top: 20px;
+    }
+    .content {
+        margin: 14px;
+        height: 100%;
+        overflow-y: auto;
+    }
+    .search {
+        display: flex;
+        flex-direction: column;
+        background: white;
+        padding: 10px;
+    }
+
+    .search-head {
+        display: flex;
+        justify-content: start;
+        font-size: 16px;
+        line-height: 42px;
+        border-bottom: 1px solid rgba(100, 100, 100, 0.1);
+    }
+    .search-body {
+        margin: 20px 0px 10px 10px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: start;
+        align-items: center;
+    }
+</style>
+<script>
+    layui.use(['admin', 'form','table'], function () {
+        var $ = layui.$
+            , table = layui.table
+            , form = layui.form;
+
+        form.render();
+        table.render({
+            elem: '#test-table-toolbar',
+            url:'./res/json/table/demo.json',
+            height:407,
+            title: '用户数据表',
+            cols: [[
+                {type: 'checkbox', fixed: 'left'}
+                ,{field:'id', title:'序号', width:80,sort: true,align:'center'}
+                ,{field:'username', title:'用户名', width:120, edit: 'text',align:'center'}
+                ,{field:'sex', title:'日期', width:80, edit: 'text', sort: true,align:'center'}
+                ,{field:'tel', title:'用户轨迹', edit: 'text',align:'center'}
+            ]]
+            ,page: true
+        });
+        form.on('submit(component-form-element)', function (data) {
+            layer.msg(JSON.stringify(data.field));
+            return false;
+        });
+    });
+</script>

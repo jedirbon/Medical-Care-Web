@@ -1,0 +1,105 @@
+<div class="content">
+    <div class="search">
+        <div class="search-head">
+            <i class="layui-icon layui-icon-search" style="font-size: 20px"></i>&nbsp;查询
+        </div>
+        <form class="layui-form search-body" action="">
+            <div class="">
+                <label class="layui-form-label">角色名称：</label>
+                <div class="layui-input-block">
+                    <input type="text" name="title" required lay-verify="required" placeholder="请输入标题"
+                           autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="ml-40">
+                <button type="button" class="layui-btn"><i class="layui-icon layui-icon-search"></i>搜索</button>
+                <button type="button" class="layui-btn layui-btn-primary">重置</button>
+            </div>
+        </form>
+    </div>
+    <div class="table">
+        <div class="layui-row layui-col-space15">
+            <div class="layui-col-md12">
+                <div class="layui-card">
+                    <div class="layui-card-body">
+                        <table class="layui-hide" id="test-table-toolbar" lay-filter="test-table-toolbar"></table>
+                        <script type="text/html" id="test-table-toolbar-toolbarDemo">
+                            <div class="layui-btn-container">
+                                <button class="layui-btn" data-type="getCheckData"><i class="layui-icon layui-icon-addition"></i>添加角色</button>
+                            </div>
+                        </script>
+                        <script type="text/html" id="test-table-toolbar-barDemo">
+                            <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="read">查看</a>
+                            <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+                            <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+                            <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="del">微信解绑</a>
+                        </script>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+    .table {
+        width: 100%;
+        margin-top: 20px;
+    }
+    .content {
+        margin: 14px;
+        height: 100%;
+        overflow-y: auto;
+    }
+    .search {
+        display: flex;
+        flex-direction: column;
+        background: white;
+        padding: 10px;
+    }
+
+    .search-head {
+        display: flex;
+        justify-content: start;
+        font-size: 16px;
+        line-height: 42px;
+        border-bottom: 1px solid rgba(100, 100, 100, 0.1);
+    }
+    .search-body {
+        margin: 20px 0px 10px 10px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: start;
+        align-items: center;
+    }
+</style>
+<script>
+    layui.use(['admin', 'form','table'], function () {
+        var $ = layui.$
+            , table = layui.table
+            , form = layui.form;
+
+        form.render();
+        table.render({
+            elem: '#test-table-toolbar',
+            url:'./res/json/table/角色管理.json',
+            toolbar: '#test-table-toolbar-toolbarDemo',
+            height:407,
+            title: '用户数据表',
+            cols: [[
+                {type: 'checkbox', fixed: 'left'}
+                ,{field:'id', title:'序号', width:80, fixed: 'left', unresize: true, sort: true}
+                ,{field:'username', title:'角色名称', width:120, edit: 'text', fixed: 'left',}
+                ,{field:'sex', title:'状态', edit: 'text', sort: true}
+                ,{field:'tel', title:'用户列表', edit: 'text'}
+                ,{field:'city', title:'功能模块', }
+                ,{field:'sign', title:'备注'}
+                ,{fixed: 'right', title:'操作', toolbar: '#test-table-toolbar-barDemo', width:240}
+            ]]
+            ,page: true
+        });
+        form.on('submit(component-form-element)', function (data) {
+            layer.msg(JSON.stringify(data.field));
+            return false;
+        });
+    });
+</script>

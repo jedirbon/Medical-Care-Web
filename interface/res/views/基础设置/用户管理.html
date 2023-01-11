@@ -14,7 +14,7 @@
             <div class="">
                 <label class="layui-form-label">管理科室：</label>
                 <div class="layui-input-block">
-                    <select name="city">
+                    <select name="city" lay-filter="test">
                         <option value="">请选择所属科室</option>
                         <option value="0">北京</option>
                         <option value="1">上海</option>
@@ -37,55 +37,48 @@
                     </select>
                 </div>
             </div>
-            <div class="flex ml-40">
+            <div class="ml-40">
                 <button type="button" class="layui-btn"><i class="layui-icon layui-icon-search"></i>搜索</button>
                 <button type="button" class="layui-btn layui-btn-primary">重置</button>
             </div>
         </form>
     </div>
     <div class="table">
-        <div class="layui-fluid">
             <div class="layui-row layui-col-space15">
                 <div class="layui-col-md12">
                     <div class="layui-card">
-                        <div class="layui-card-header">数据操作</div>
+                        <div class="flex bt-1 pd-10"><i class="layui-icon layui-icon-table">列表</i><a class="layui-font-blue">点击下载《批量添加用户模板》</a></div>
                         <div class="layui-card-body">
-                            <div class="layui-btn-group test-table-operate-btn" style="margin-bottom: 10px;">
-                                <button class="layui-btn" data-type="getCheckData">获取选中行数据</button>
-                                <button class="layui-btn" data-type="getCheckLength">获取选中数目</button>
-                                <button class="layui-btn" data-type="isAll">验证是否全选</button>
-                            </div>
-
-                            <table class="layui-hide" id="test-table-operate" lay-filter="test-table-operate"></table>
-
-                            <script type="text/html" id="test-table-operate-barDemo">
-                                <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>
+                            <table class="layui-hide" id="test-table-toolbar" lay-filter="test-table-toolbar"></table>
+                            <script type="text/html" id="test-table-toolbar-toolbarDemo">
+                                <div class="layui-btn-container">
+                                    <button class="layui-btn" data-type="getCheckData"><i class="layui-icon layui-icon-addition"></i>新增用户</button>
+                                    <button class="layui-btn layui-btn-danger" data-type="getCheckLength"><i class="layui-icon layui-icon-delete"></i>批量删除用户</button>
+                                    <button class="layui-btn" data-type="isAll"><i class="layui-icon layui-icon-addition"></i>批量添加用户</button>
+                                </div>
+                            </script>
+                            <script type="text/html" id="test-table-toolbar-barDemo">
+                                <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="read">查看</a>
                                 <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
                                 <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+                                <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="del">微信解绑</a>
                             </script>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
     </div>
 </div>
 <style>
-    .table{
-
-    }
-    .flex {
-        display: flex;
-    }
-    .ml-40{
-        margin-left: 40px;
+    .table {
+        width: 100%;
+        margin-top: 20px;
     }
     .content {
         margin: 14px;
         height: 100%;
         overflow-y: auto;
     }
-
     .search {
         display: flex;
         flex-direction: column;
@@ -100,7 +93,6 @@
         line-height: 42px;
         border-bottom: 1px solid rgba(100, 100, 100, 0.1);
     }
-
     .search-body {
         margin: 20px 0px 10px 10px;
         display: flex;
@@ -112,34 +104,34 @@
 <script>
     layui.use(['admin', 'form','table'], function () {
         var $ = layui.$
-            , admin = layui.admin
             , table = layui.table
-            , element = layui.element
             , form = layui.form;
 
         form.render();
         table.render({
-            elem: '#test-table-operate'
-            ,url: './json/table/user.js'
-            ,width: admin.screen() > 1 ? '100%' : ''
-            ,height: 332
-            ,cols: [[
-                {type:'checkbox', fixed: 'left'}
-                ,{field:'id', width:80, title: 'ID', sort: true, fixed: 'left'}
-                ,{field:'username', width:80, title: '用户名'}
-                ,{field:'sex', width:80, title: '性别', sort: true}
-                ,{field:'city', width:80, title: '城市'}
-                ,{field:'sign', width: 160, title: '签名'}
-                ,{field:'experience', width:80, title: '积分', sort: true}
-                ,{field:'wealth', width:135, title: '财富', sort: true}
-                ,{field:'classify', width:80, title: '职业'}
-                ,{field:'score', width:80, title: '评分', sort: true, fixed: 'right'}
-                ,{width:178, align:'center', fixed: 'right', toolbar: '#test-table-operate-barDemo'}
+            elem: '#test-table-toolbar',
+            url:'./res/json/table/demo.json',
+            toolbar: '#test-table-toolbar-toolbarDemo',
+            height:407,
+            title: '用户数据表',
+            cols: [[
+                 {type: 'checkbox', fixed: 'left'}
+                ,{field:'id', title:'序号', width:80, fixed: 'left', unresize: true, sort: true}
+                ,{field:'username', title:'用户名', width:120, edit: 'text'}
+                ,{field:'sex', title:'性别', width:80, edit: 'text', sort: true}
+                ,{field:'tel', title:'联系电话', width:150, edit: 'text'}
+                ,{field:'city', title:'工作科室', width:100}
+                ,{field:'sign', title:'管理科室',width: 100}
+                ,{field:'experience', title:'所属角色', width:80, sort: true}
+                ,{field:'ip', title:'状态', width:120}
+                ,{field:'logins', title:'绑定微信', width:100, sort: true}
+                ,{field:'joinTime', title:'科室审批负责人', width:120}
+                ,{field:'备注', title:'备注', width:120}
+                ,{field:'lastTime', title:'最后登入日期', width:120}
+                ,{fixed: 'right', title:'操作', toolbar: '#test-table-toolbar-barDemo',width:260}
             ]]
             ,page: true
         });
-        element.render('breadcrumb', 'breadcrumb');
-
         form.on('submit(component-form-element)', function (data) {
             layer.msg(JSON.stringify(data.field));
             return false;
